@@ -14,7 +14,7 @@ function Sidebar() {
                      <Link className='link' to={'/admin/branch'}>Branches</Link>
                   </li>
                   <li>
-                     <Link className='link' to={'/admin/product'}>Products</Link>
+                     <Link className='link' to={'/admin/products'}>Products</Link>
                   </li>
                   <li>
                      <Link className='link' to={'/admin/order'}>Orders</Link>

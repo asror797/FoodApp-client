@@ -1,0 +1,115 @@
+
+.header-section {
+   width: 100%;
+   display: flex;
+   justify-content: center;
+}
+
+.header-wrapper {
+   width: 1195px;
+   padding: 15px 0;
+   display: flex;
+   justify-content: flex-end;
+}
+
+
+.header-wrapper button {
+   padding: 9px;
+   
+}
+
+
+.table-wrapper {
+   display: flex;
+   justify-content: center;
+}
+
+table {
+   width: 1195px;
+   background-color: white;
+}
+
+.id-column {
+   width: 45px;
+}
+
+
+
+
+
+
+/*  Modal Add Restaurants */
+
+
+.modalWrapperAdd {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   align-items: center;
+   padding: 95px 0;
+}
+
+
+.modalWrapperAdd input {
+   width: 275px;
+   font-size: 17px;
+   padding: 9px 7px;
+   margin-bottom: 23px;
+   text-transform: capitalize;
+}
+
+
+.modalWrapperAdd input:focus {
+  outline: none;
+}
+
+.modalWrapperAdd select {
+   width: 293px;
+   padding: 9px 7px;
+   font-size: 17px;
+   margin-bottom: 65px;
+}
+
+.modalWrapperAdd select:focus {
+   outline: none;
+}
+
+.option {
+   padding: 15px 5px !important;
+   font-size: 19px !important;
+}
+
+
+.modalBtns {
+   width: 195px;
+   display: flex;
+   align-items: stretch;
+   justify-content: space-between;
+}
+
+.modalBtns button {
+   width: 75px;
+   padding: 5px 13px;
+   font-size: 15px;
+   font-weight: 500;
+   border: none;
+   color: white;
+   border-radius: 5px;
+   cursor: pointer;
+}
+
+
+.add-btn {
+   background-color: #4285f4;
+}
+
+.cancel-btn {
+   background-color: #ff3547;
+}
+
+
+.heading-text {
+   font-size: 19px;
+   color: rgb(46, 43, 43);
+}
+
