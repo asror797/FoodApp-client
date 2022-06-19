@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import DelOrder from "./delModal/delOrder";
+import cancelOrder from "./editModal/cancelOrder";
 import Loading from "./modal/loading";
 
 function Order() {
@@ -9,6 +10,7 @@ function Order() {
    const [orders, setOrders ] = useState([])
    const [delModal , setModal ] = useState(false)
    const [orderId , setId ] = useState()
+   const [cancelModal , setCancel ] = useState(false)
    
    useEffect(() => {
       fetch('http://localhost:9000/orders')
@@ -30,8 +32,7 @@ function Order() {
                         <th className='id-column'>id</th>
                         <th className='name-row'>Name</th>
                         <th>flefmfe</th>
-                        <th>Products</th>
-                        <th>Count</th>
+                        <th>Product</th>
                         <th>Time</th>
                         <th>Options</th>
                      </tr>
@@ -45,16 +46,19 @@ function Order() {
                                  <td>{i+1}</td>
                                  <td>{e.client_name}</td>
                                  <td>+998 {e.client_phone}</td>
-                                 <td>{e.product_id}</td>
-                                 <td>{e.product_id}</td>
+                                 <td>{e.product_name}</td>
                                  <td>{e.ordered_time}</td>
                                  <td>
                                     <div className="btns-clmn">
                                        <button 
+                                          data-id = {e.id}
                                           onClick={(e) => {
-                                             console.log(e.targte.dataset.id);
+                                             setCancel(true)
+                                             setId(e.target.dataset.id)
                                           }}
-                                          className='btn edit-btn'>Cancel</button>
+                                          className='btn edit-btn'>
+                                          Cancel
+                                       </button>
                                        <button 
                                           data-id = {e.id}
                                           onClick={e => {
@@ -74,6 +78,7 @@ function Order() {
             </div>
          </div>
          {loading && <Loading/>}
+         {cancelModal && <cancelOrder load = {setLoading} closeModal = {setCancel} id= {orderId}/>}
          {delModal && <DelOrder load={setLoading} id = {orderId} closeModal={setModal}/>}
       </>
    )

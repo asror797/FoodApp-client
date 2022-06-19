@@ -55,6 +55,8 @@ function ResModal({closeModal , res}) {
 
                         <button 
                            onClick={() => {
+                              closeModal(false)
+                              res(true)
                               fetch('http://localhost:9000/new-restaurant',{
                                  method:"POST",
                                  headers:{
@@ -68,8 +70,7 @@ function ResModal({closeModal , res}) {
                                  .then(res => res.json())
                                  .then(data => {
                                     if(data) {
-                                       closeModal(false)
-                                       res(true)
+                                       console.log(data);
                                     }
                                  })
                                  .catch(error => {

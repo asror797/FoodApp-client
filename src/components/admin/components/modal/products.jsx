@@ -104,6 +104,8 @@ function ProductModal({closeModal, load}) {
 
                         <button 
                            onClick={() => {
+                              load(true)
+                              closeModal(false)
                               fetch('http://localhost:9000/new-product',{
                                  method:"POST",
                                  headers:{
@@ -118,8 +120,7 @@ function ProductModal({closeModal, load}) {
                               })
                                  .then(res => res.json())
                                  .then(data => {
-                                    load(true)
-                                    closeModal(false)
+                                    console.log(data);
                                  })
                            }}
                            className="add-btn">
