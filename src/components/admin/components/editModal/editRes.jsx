@@ -1,15 +1,25 @@
-import { useEffect, useState } from "react";
 
+import { useEffect, useState } from 'react'
 
-function ResModal({closeModal , res}) {
+function EditRes({closeModal, id:editId}) {
 
 
    const [ name , setName ] = useState('')
    const [id , setId ] = useState(1)
+   const [restaurant , setRestaurant ] = useState({})
 
-   // useEffect(() => {
 
-   // },[id])
+   useEffect(() => {
+      fetch(`http://localhost:9000/restaurant/${editId}`)
+         .then(res => res.json())
+         .then(data => {
+            console.log(data);
+            setRestaurant(data)
+         })
+   },[])
+
+
+  
 
 
    return(
@@ -17,8 +27,9 @@ function ResModal({closeModal , res}) {
          <div className="modalBox">
                <div className="addRes">
                  <div className="modalWrapperAdd">
-                     <p className="heading-text">New Restaurant</p>
+                     <p className="heading-text">Edit Restaurant {editId}</p>
                      <input 
+                        defaultValue = { restaurant.restaurant_name}
                         onChange={e => {
                            setName(e.target.value)
                            console.log(e.target.value);
@@ -31,7 +42,7 @@ function ResModal({closeModal , res}) {
                            setId(e.target.value)
                            console.log(e.target.value);
                         }}>
-                        <option 
+                        <option
                            className="option" 
                            value={1}>
                            Fast Food
@@ -55,29 +66,10 @@ function ResModal({closeModal , res}) {
 
                         <button 
                            onClick={() => {
-                              fetch('http://localhost:9000/new-restaurant',{
-                                 method:"POST",
-                                 headers:{
-                                    "Content-Type":"application/json"
-                                 },
-                                 body:JSON.stringify({
-                                    name,
-                                    id
-                                 })
-                              })
-                                 .then(res => res.json())
-                                 .then(data => {
-                                    if(data) {
-                                       closeModal(false)
-                                       res(true)
-                                    }
-                                 })
-                                 .catch(error => {
-                                    console.log(error);
-                                 })
+                                 console.log(5);
                            }}
                            className="add-btn">
-                           Add
+                           Edit
                         </button>
                      </div>
                  </div>
@@ -87,4 +79,4 @@ function ResModal({closeModal , res}) {
    )
 }
 
-export default  ResModal;
+export default  EditRes;

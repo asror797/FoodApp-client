@@ -1,20 +1,42 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import DelModal from "./delModal/Delbranch";
+import EditBranch from "./editModal/editBranch";
 import BranchModel from "./modal/branch";
+import Loading from "./modal/loading";
 
 
 function Branch() {
 
    const [Modal , setModal ] = useState(false)
    const [branches, setBranches ] = useState([])
+   const [ delModal , setDelModal ] = useState(false)
+   const [ editModal , setEditModal ] = useState(false)
+   const [editId , setEditId ] = useState()
+   const [delId , setDelId ] = useState()
+   const [loading , setLoading ] = useState(true)
+
+
+   const HandlerDeleteBtn = () => {
+      setDelModal(true)
+   }
+
+   const HandlerEditbnt = () => {
+      setEditModal(true)
+   }
 
    useEffect(() => {
       fetch('http://localhost:9000/branches')
          .then(res => res.json())
          .then(data => {
-
-            return setBranches(data);
+            if(loading) {
+               setBranches(data);
+               setTimeout(() => {
+                  setLoading(false)
+               },500)
+            }
          })
-   },[1])
+   },[loading])
 
 
    return(
@@ -34,8 +56,8 @@ function Branch() {
                   <thead>
                      <tr>
                         <th className='id-column'>id</th>
-                        <th className='name-row'>Name</th>
-                        <th>flefmfe</th>
+                        <th className='name-row'>Filial Name</th>
+                        <th>Restaurant Name</th>
                         <th>Products</th>
                         <th>Options</th>
                      </tr>
@@ -48,12 +70,29 @@ function Branch() {
                            <tr key={i}>
                               <td>{i+1}</td>
                               <td>{e.branch_name}</td>
-                              <td>{e.restaurant_id}</td>
-                              <td>Maria Anders</td>
+                              <td>{e.restaurant_name}</td>
+                              <td><Link to='/'>Products</Link></td>
                               <td>
                                  <div className="btns-clmn">
-                                    <button className='btn edit-btn'>Edit</button>
-                                    <button className='btn del-btn'>Delete</button>
+                                    <button 
+                                       data-id={e.id}
+                                       onClick={e => {
+                                          HandlerEditbnt()
+                                          setEditId(e.target.dataset.id)
+                                       }} 
+                                       className='btn edit-btn'>
+                                       Edit
+                                    </button>
+
+                                    <button 
+                                       data-id={e.id}
+                                       onClick={e => {
+                                          HandlerDeleteBtn()
+                                          setDelId(e.target.dataset.id)
+                                       }} 
+                                       className='btn del-btn'>
+                                       Delete
+                                    </button>
                                  </div>
                               </td>
                            </tr>
@@ -65,7 +104,10 @@ function Branch() {
                </table>
             </div>
          </div>
-         {Modal && <BranchModel closeModal={setModal}/>}
+         {Modal && <BranchModel load = {setLoading} closeModal={setModal}/>}
+         {delModal && <DelModal load = {setLoading} id={delId} res = {setLoading} closeModal = {setDelModal}/> }
+         {editModal && <EditBranch id= {editId} closeModal={setEditModal}/>}
+         {loading && <Loading/>}
       </>
    )
 }

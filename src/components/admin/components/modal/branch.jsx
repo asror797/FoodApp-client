@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 
-function BranchModel({closeModal}) {
+function BranchModel({closeModal,load}) {
 
 
    const [ name , setName ] = useState('')
@@ -22,7 +22,7 @@ function BranchModel({closeModal}) {
          <div className="modalBox">
                <div className="addRes">
                  <div className="modalWrapperAdd">
-                     <p className="heading-text">New Restaurant</p>
+                     <p className="heading-text">New Branch</p>
                      <input 
                         onChange={e => {
                            setName(e.target.value)
@@ -74,7 +74,9 @@ function BranchModel({closeModal}) {
                               })
                                  .then(res => res.json())
                                  .then(data => {
-                                    console.log(data);
+                                    load(true)
+                                    closeModal(false)
+                                    // console.log(data);
                                  })
                            }}
                            className="add-btn">

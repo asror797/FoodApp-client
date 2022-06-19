@@ -1,47 +1,45 @@
 import { useEffect, useState } from "react";
 
 
-function ResModal({closeModal , res}) {
+function EditProducts({closeModal,productId , load}) {
 
 
    const [ name , setName ] = useState('')
-   const [id , setId ] = useState(1)
+   const [price , setPrice ] = useState(0)
+   const [product , setProduct] = useState()
 
-   // useEffect(() => {
-
-   // },[id])
-
+   useEffect(() => {
+      fetch(`http://localhost:9000/product/${productId}`)
+         .then(res => res.json())
+         .then(data => {
+            setProduct(data)
+            setPrice(data.product_price)
+            setName(data.product_name)
+         })
+   },[])
 
    return(
       <>
          <div className="modalBox">
                <div className="addRes">
                  <div className="modalWrapperAdd">
-                     <p className="heading-text">New Restaurant</p>
+                     <p className="heading-text">Edit Product</p>
                      <input 
+                        defaultValue={product?.product_name}
                         onChange={e => {
                            setName(e.target.value)
-                           console.log(e.target.value);
                         }}
                         type="text"
                         placeholder="Name" />
 
-                     <select 
+                     <input 
+                        defaultValue={product?.product_price}
                         onChange={e => {
-                           setId(e.target.value)
-                           console.log(e.target.value);
-                        }}>
-                        <option 
-                           className="option" 
-                           value={1}>
-                           Fast Food
-                        </option>
-                        <option 
-                           className="option"
-                           value={2}>
-                           Milliy Taom
-                        </option>
-                     </select>
+                           setPrice(e.target.value)
+                        }}
+                        type="number"
+                        placeholder="Price" />
+
                      <div 
                         className="modalBtns">
 
@@ -55,29 +53,26 @@ function ResModal({closeModal , res}) {
 
                         <button 
                            onClick={() => {
-                              fetch('http://localhost:9000/new-restaurant',{
-                                 method:"POST",
+                              fetch('http://localhost:9000/product',{
+                                 method:"PUT",
                                  headers:{
                                     "Content-Type":"application/json"
                                  },
                                  body:JSON.stringify({
                                     name,
-                                    id
+                                    price,
+                                    id:productId
                                  })
                               })
                                  .then(res => res.json())
                                  .then(data => {
-                                    if(data) {
-                                       closeModal(false)
-                                       res(true)
-                                    }
-                                 })
-                                 .catch(error => {
-                                    console.log(error);
+                                    load(true)
+                                    closeModal(false)
+                                    // console.log(data);
                                  })
                            }}
                            className="add-btn">
-                           Add
+                           Edit
                         </button>
                      </div>
                  </div>
@@ -87,4 +82,4 @@ function ResModal({closeModal , res}) {
    )
 }
 
-export default  ResModal;
+export default  EditProducts;

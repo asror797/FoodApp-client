@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 
 
-function ResModal({closeModal , res}) {
+function EditBranch({closeModal , id:editId}) {
 
 
    const [ name , setName ] = useState('')
    const [id , setId ] = useState(1)
+   const [restaurants , setRestaurant ] = useState([])
 
-   // useEffect(() => {
-
-   // },[id])
+   useEffect(() => {
+      fetch('http://localhost:9000/edit-restaurants')
+         .then(res => res.json())
+         .then(data => {
+            setRestaurant(data)
+         })
+   },[])
 
 
    return(
@@ -17,8 +22,9 @@ function ResModal({closeModal , res}) {
          <div className="modalBox">
                <div className="addRes">
                  <div className="modalWrapperAdd">
-                     <p className="heading-text">New Restaurant</p>
+                     <p className="heading-text">Edit Branchs { editId }</p>
                      <input 
+                        defaultValue={45}
                         onChange={e => {
                            setName(e.target.value)
                            console.log(e.target.value);
@@ -31,16 +37,18 @@ function ResModal({closeModal , res}) {
                            setId(e.target.value)
                            console.log(e.target.value);
                         }}>
-                        <option 
-                           className="option" 
-                           value={1}>
-                           Fast Food
-                        </option>
-                        <option 
-                           className="option"
-                           value={2}>
-                           Milliy Taom
-                        </option>
+                           {
+                              restaurants.map((e,i) => {
+                                 return(
+                                    <option 
+                                       key={i}
+                                       className="option"
+                                       value={e.id}>
+                                       {e.name}
+                                    </option>
+                                 )
+                              })
+                           }
                      </select>
                      <div 
                         className="modalBtns">
@@ -55,7 +63,7 @@ function ResModal({closeModal , res}) {
 
                         <button 
                            onClick={() => {
-                              fetch('http://localhost:9000/new-restaurant',{
+                              fetch('http://localhost:9000/new-branch',{
                                  method:"POST",
                                  headers:{
                                     "Content-Type":"application/json"
@@ -67,17 +75,11 @@ function ResModal({closeModal , res}) {
                               })
                                  .then(res => res.json())
                                  .then(data => {
-                                    if(data) {
-                                       closeModal(false)
-                                       res(true)
-                                    }
-                                 })
-                                 .catch(error => {
-                                    console.log(error);
+                                    console.log(data);
                                  })
                            }}
                            className="add-btn">
-                           Add
+                           Edit
                         </button>
                      </div>
                  </div>
@@ -87,4 +89,4 @@ function ResModal({closeModal , res}) {
    )
 }
 
-export default  ResModal;
+export default  EditBranch;

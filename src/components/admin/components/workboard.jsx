@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Header from "./header";
+import Loading from "./modal/loading";
 
 
 function Workboard() {
@@ -7,7 +8,10 @@ function Workboard() {
       <>
          <div className="workboard">
             <Header/>
-            <Outlet/>
+            <div className="main-data">
+               <Outlet/>
+            </div>
+            {/* {true && <Loading/>} */}
          </div>
       </>
    )

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 
 
-function ProductModal({closeModal}) {
+function ProductModal({closeModal, load}) {
 
 
    const [ name , setName ] = useState('')
-   const [id , setId ] = useState(1)
+   const [restaurant_id , setId ] = useState(1)
    const [branch_id , setBranchId ] = useState(1)
    const [restaurants , setRestaurant ] = useState([])
    const [branches , setBranches ] = useState([])
@@ -19,13 +19,19 @@ function ProductModal({closeModal}) {
          })
    },[])
 
+
+
    useEffect(() => {
-      fetch('http://localhost:9000/branches')
+      fetch(`http://localhost:9000/branch/${restaurant_id}`)
          .then(res => res.json())
          .then(data => {
+            console.log(data);
             setBranches(data)
+            if(data.length == 1) {
+               setBranchId(data[0].id)
+            }
          })
-   })
+   },[restaurant_id])
 
 
    return(
@@ -37,15 +43,21 @@ function ProductModal({closeModal}) {
                      <input 
                         onChange={e => {
                            setName(e.target.value)
-                           console.log(e.target.value);
                         }}
                         type="text"
                         placeholder="Name" />
 
+                     <input 
+                        onChange={e => {
+                           setPrice(e.target.value)
+                        }}
+                        type="number"
+                        placeholder="Price" />
+
                      <select 
+                        className="select"
                         onChange={e => {
                            setId(e.target.value)
-                           console.log(e.target.value);
                         }}>
                            {
                               restaurants.map((e,i) => {
@@ -63,8 +75,7 @@ function ProductModal({closeModal}) {
 
                      <select 
                         onChange={e => {
-                           setId(e.target.value)
-                           console.log(e.target.value);
+                           setBranchId(e.target.value)
                         }}>
                            {
                               branches.map((e,i) => {
@@ -73,7 +84,7 @@ function ProductModal({closeModal}) {
                                        key={i}
                                        className="option"
                                        value={e.id}>
-                                       {e.name}
+                                       {e.branch_name}
                                     </option>
                                  )
                               })
@@ -102,12 +113,13 @@ function ProductModal({closeModal}) {
                                     name,
                                     price,
                                     branch_id,
-                                    id
+                                    restaurant_id
                                  })
                               })
                                  .then(res => res.json())
                                  .then(data => {
-                                    console.log(data);
+                                    load(true)
+                                    closeModal(false)
                                  })
                            }}
                            className="add-btn">

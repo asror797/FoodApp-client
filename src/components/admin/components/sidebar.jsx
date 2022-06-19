@@ -1,10 +1,12 @@
 
 import {Link} from 'react-router-dom'
+import logo from '../../../assets/deliveryapp.jpg'
 
 function Sidebar() {
    return(
       <>
          <div className="sidebar">
+               <img width={255} src={logo} alt="logo" />
                <p>Tools</p>
                <ul className='sidebar-menu'>
                   <li>

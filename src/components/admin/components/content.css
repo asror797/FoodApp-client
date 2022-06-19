@@ -1,6 +1,7 @@
 
 .header-section {
    width: 100%;
+   margin-top: 55px;
    display: flex;
    justify-content: center;
 }
@@ -68,6 +69,7 @@ table {
    padding: 9px 7px;
    font-size: 17px;
    margin-bottom: 65px;
+   font-family: 'Quicksand',sans-serif;
 }
 
 .modalWrapperAdd select:focus {
@@ -79,6 +81,9 @@ table {
    font-size: 19px !important;
 }
 
+.select {
+   margin-bottom: 25px !important;
+}
 
 .modalBtns {
    width: 195px;
@@ -89,13 +94,15 @@ table {
 
 .modalBtns button {
    width: 75px;
-   padding: 5px 13px;
+   padding: 7px 13px;
    font-size: 15px;
    font-weight: 500;
    border: none;
    color: white;
+   margin: 0 13px;
    border-radius: 5px;
    cursor: pointer;
+   width: 115px;
 }
 
 
@@ -112,4 +119,69 @@ table {
    font-size: 19px;
    color: rgb(46, 43, 43);
 }
+
+
+
+@keyframes pulse {
+   from {
+     opacity: 1;
+     transform: scale(1);
+   }
+   to {
+     opacity: .25;
+     transform: scale(.75);
+   }
+}
+
+.wrapper-loading {
+   width: 100%;
+   min-height: 100vh;
+   height: 100%;
+   position: absolute;
+   z-index: 7;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background-color: #959fa7b0;
+}
+
+
+.pulse-container {
+   width: 135px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+ }
+ 
+ .pulse-bubble {
+   width: 29px;
+   height: 29px;
+   border-radius: 50%;
+   background-color: #ffffff ;
+ }
+ 
+ .pulse-bubble-1 {
+     animation: pulse .4s ease 0s infinite alternate;
+ }
+ .pulse-bubble-2 {
+     animation: pulse .4s ease .2s infinite alternate;
+ }
+ .pulse-bubble-3 {
+     animation: pulse .4s ease .4s infinite alternate;
+ }
+ 
+
+
+/* 
+
+ .main-data {
+   width: 100%;
+   min-height:100vh ;
+   padding-top: 75px;
+   overflow-y: scroll;
+ } */
 
